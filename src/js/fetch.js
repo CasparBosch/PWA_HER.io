@@ -1,3 +1,32 @@
+// Tags
+if (document.getElementById("tagsIndex")) {
+    // Check if Online
+    if (navigator.onLine) {
+        fetch('https://cmgt.hr.nl/api/tags')
+            .then(response => response.json())
+            .then(data => {
+                const tagsIndex = document.getElementById('tagsIndex');
+                let content = '';
+                
+                data.data.forEach(item => {
+                    const tagName = item.name;
+                    
+                    content += `
+                        <div class="rounded-full py-2 px-4 bg-primary text-white">${tagName}</div>
+                    `;
+                });
+                tagsIndex.innerHTML = content;
+            })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+    } else {
+        // Display Text when Site is Offline
+        const tagsIndex = document.getElementById('tagsIndex');
+        tagsIndex.textContent = 'Site is offline. Controleer je internet verbinding.';
+    }
+}
+
 // Projects
 if (document.getElementById("projectsIndex")) {
     fetch('https://cmgt.hr.nl/api/projects')
@@ -50,10 +79,9 @@ if (document.getElementById("projectDetails")) {
             // Find the project with the matching ID
             const project = data.data.find(item => item.project.id == projectId);
             if (project) {
-                // Display the project details on the page
+
                 const projectDetails = document.getElementById('projectDetails');
                 if (projectDetails) {
-                    // Extract project title and display it
                     const title = project.project.title;
                     // const headerImage = project.project.header_image;
                     const tagline = project.project.tagline;

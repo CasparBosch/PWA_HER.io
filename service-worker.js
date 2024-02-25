@@ -10,6 +10,7 @@ const cacheName = 'v1';
 //     '/src/js/index.js'
 // ]
 
+
 // Call Install Event
 self.addEventListener('install', event => {
     console.log('Service Worker: Installed');
@@ -69,3 +70,25 @@ self.addEventListener('fetch', event => {
             }).catch(error => caches.match(event.request).then(res => res))
     );
 })
+
+// Tags Online and Offline
+self.addEventListener('fetch', event => {
+    console.log('Service Worker: Fetching');
+
+    if (event.request.url.includes('https://cmgt.hr.nl/api/tags')) {
+        event.respondWith(
+            fetch(event.request)
+                .then(res => {
+                    const resClone = res.clone();
+
+                    caches.open(cacheName).then(cache => {
+                        cache.put(event.request, resClone);
+                    });
+                    return res;
+                })
+            .catch(error => {
+                return caches.match(event.request).then(res => res);
+            })
+        );
+    }
+});
