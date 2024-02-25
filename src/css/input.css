@@ -8,3 +8,14 @@ body {
     background-color: #eff0eb;
 }
 
+/* ----- Status ----- */
+.status__online {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: green;
+}
+  
+.status--offline {
+    background-color: red;
+}
