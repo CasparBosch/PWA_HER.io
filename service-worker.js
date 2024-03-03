@@ -5,11 +5,13 @@ const cacheName = 'v3';
 // Index of Pages
 const cacheAssets = [
     'index.html',
+    'project.html',
     // CSS
     '/src/css/input.css',
     '/src/css/output.css',
     // JS
     '/src/js/index.js',
+    '/src/js/fetch.js.',
     '/src/js/localforage.min.js',
     'service-worker.js',
 ]
