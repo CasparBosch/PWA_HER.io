@@ -55,6 +55,22 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   console.log("Service Working: Fetching");
 
+  // tags
+  // projects
+    // fetch naar projects
+    async function getProjectData() {
+      try {
+        const data = await fetch("https://cmgt.hr.nl/api/projects");
+        return data.json();
+      } catch (error) {
+        console.error("Failed to fetch project data:", error);
+        return null;
+      }
+    }
+      // lukt dit, save to indexeddb en return response
+      // lukt dit niet, get from indexeddb en return promise met daarin een response met de data
+  // (project details)
+  // app shell
   event.respondWith(
     // Fetch for Indexed Pages
     fetch(event.request).catch(() => caches.match(event.request))
@@ -89,11 +105,9 @@ async function saveDataToDb(key, newData) {
     if (existingData) {
       // If data already saved, replace with new data
       await localforage.setItem(key, newData);
-      // console.log(key + ' Updated');
     } else {
       // When no data, save data
       await localforage.setItem(key, newData);
-      // console.log(key + ' Saved');
     }
   }
 }
